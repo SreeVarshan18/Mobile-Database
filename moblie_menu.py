@@ -1,7 +1,7 @@
 import sqlite3 as s
 connection = s.connect("Mobile.db")
 
-listoftables = connection.execute("SELECT NAME FROM sqlite_master WHERE type='table ' AND name='SMARTPHONES'").fetchall()
+listoftables = connection.execute("SELECT name from sqlite_master WHERE type='table' AND name='SMARTPHONES'").fetchall()
 
 if listoftables != []:
     print("Table already exist")
