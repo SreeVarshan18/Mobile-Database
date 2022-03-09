@@ -1,4 +1,5 @@
 import sqlite3 as s
+from prettytable import PrettyTable
 connection = s.connect("Mobile.db")
 
 listoftables = connection.execute("SELECT name from sqlite_master WHERE type='table' AND name='SMARTPHONES'").fetchall()
@@ -46,29 +47,21 @@ while True:
 
     elif choice == 2:
         result = connection.execute("SELECT * FROM SMARTPHONES")
+        table = PrettyTable(["ID", "Serial Number", "Model Name", "Brand", "Manufacture Year", "Manufacture Month", "Price"])
 
         for i in result:
-            print("Id: ", i[0])
-            print("Serial Number: ", i[1])
-            print("Model Name: ", i[2])
-            print("Brand: ", i[3])
-            print("Manufacture Year: ", i[4])
-            print("Manufacture Month: ", i[5])
-            print("Price: ", i[6])
+            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5], i[6]])
+        print(table)
 
     elif choice == 3:
         getSno = input("Enter Serial number: ")
 
         result = connection.execute("SELECT * FROM SMARTPHONES WHERE SERIAL_NUMBER="+getSno)
-
+        table = PrettyTable(
+            ["ID", "Serial Number", "Model Name", "Brand", "Manufacture Year", "Manufacture Month", "Price"])
         for i in result:
-            print("Id: ", i[0])
-            print("Serial Number: ", i[1])
-            print("Model Name: ", i[2])
-            print("Brand: ", i[3])
-            print("Manufacture Year: ", i[4])
-            print("Manufacture Month: ", i[5])
-            print("Price: ", i[6])
+            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5], i[6]])
+        print(table)
 
     elif choice == 4:
         getSno = input("Enter Serial number: ")
