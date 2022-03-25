@@ -24,10 +24,13 @@ while True:
     print("Select an option from menu")
     print("1.Add a Smart Phone ")
     print("2.View all Smart Phones ")
-    print("3.Search a Smart Phone using Serial Number ")
+    print("3.Search a Smart Phone using like operator ")
     print("4.Update a Smart Phone using Serial Number ")
     print("5.Delete a Smart Phone using Serial Number ")
-    print("6.Exit ")
+    print("6.most expensive phone data ")
+    print("7.lEAST expensive phone data ")
+    print("8.Count of phones ")
+    print("9.Exit ")
 
     choice = int(input("Enter a choice: "))
 
@@ -54,9 +57,9 @@ while True:
         print(table)
 
     elif choice == 3:
-        getSno = input("Enter Serial number: ")
+        getBname = input("Enter Brand Name Starting Letter: ")
 
-        result = connection.execute("SELECT * FROM SMARTPHONES WHERE SERIAL_NUMBER="+getSno)
+        result = connection.execute("SELECT * FROM SMARTPHONES WHERE BRAND LIKE '%"+getBname+"%'")
         table = PrettyTable(
             ["ID", "Serial Number", "Model Name", "Brand", "Manufacture Year", "Manufacture Month", "Price"])
         for i in result:
@@ -87,6 +90,33 @@ while True:
         print("Deleted Successfully")
 
     elif choice == 6:
+
+        result = connection.execute("SELECT * FROM SMARTPHONES WHERE PRICE=(SELECT MAX(PRICE) as price FROM SMARTPHONES )")
+        table = PrettyTable(
+            ["ID", "Serial Number", "Model Name", "Brand", "Manufacture Year", "Manufacture Month", "Price"])
+        for i in result:
+            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5], i[6]])
+        print(table)
+
+    elif choice == 7:
+
+        result = connection.execute("SELECT * FROM SMARTPHONES WHERE PRICE=(SELECT MIN(PRICE) as price FROM SMARTPHONES )")
+        table = PrettyTable(
+            ["ID", "Serial Number", "Model Name", "Brand", "Manufacture Year", "Manufacture Month", "Price"])
+        for i in result:
+            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5], i[6]])
+        print(table)
+
+    elif choice == 8:
+
+        result = connection.execute("SELECT COUNT(*) as count FROM SMARTPHONES ")
+        table = PrettyTable(
+            ["Count"])
+        for i in result:
+            table.add_row([i[0]])
+        print(table)
+
+    elif choice == 9:
         connection.close()
         break
 
